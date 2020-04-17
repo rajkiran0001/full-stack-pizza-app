@@ -4,6 +4,7 @@ const cors = require('cors')
 const path = require('path')
 const mysql = require('mysql')
 
+
 // Create the server
 const app = express()
 
@@ -11,6 +12,8 @@ const app = express()
 app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.use(cors());
+
+const SELECT_ALL_USERS = 'select * from users'
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -27,7 +30,33 @@ connection.connect(err => {
 console.log(connection);
 
 app.get('/', (req, res) => {
-  res.send('go to the home pagenode')
+  res.send('go to the home page')
+})
+
+app.get('/users', (req, res) => {
+  connection.query(SELECT_ALL_USERS, (err, results) => {
+    if(err) {
+      return res.send(err)
+    }
+    else {
+      return res.json({
+        data: results
+      })
+    }
+  })
+})
+
+app.get('/users/add', (req, res) => {
+  const { uid, firstname, secondname } = req.query;
+  const INSERT_USERS = `INSERT INTO users (uid, firstname, secondname) values('${uid}','${firstname}','${secondname}')`;
+  connection.query(INSERT_USERS, (err, results) => {
+    if(err) {
+      return res.send(err)
+    }
+    else {
+      return res.send('successfully added users')
+    }
+  })
 })
 
 // Anything that doesn't match the above, send back the index.html file
