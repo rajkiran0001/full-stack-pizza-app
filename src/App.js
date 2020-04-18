@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import {v4} from 'uuid'
 import './App.css'
+import "bootstrap/dist/css/bootstrap.min.css"
+import { Switch, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Cart from './components/Cart';
+import Default from './components/Default';
+import Details from './components/Details';
+import ProductList from './components/ProductList';
 
 class App extends Component {
   state = {
@@ -34,21 +41,27 @@ class App extends Component {
   handleChange = evt => {
     this.setState({ [evt.target.name]: evt.target.value })
   }
-  
+
   renderuser = ({ firstname, uid, secondname}) => <div key={uid}>{firstname}{secondname}</div>
   render() {
     const { users, user } = this.state
     console.log(users)
     return (
-      <div className="App">
-        <h3>Pizza Application</h3>
+      <React.Fragment>
+        <Navbar />
+        <Switch>
+        <Route exact path="/" component={ProductList} />
+          <Route path="/details" component={Details} />
+          <Route path="/cart" component={Cart} />
+          <Route component={Default} />
+        </Switch>
         {users.map(this.renderuser)}
         <div>
           <input value={user.firstname} onChange= {e => this.setState({ user: {...user, firstname:e.target.value}})} />
           <input value={user.secondname} onChange= {e => this.setState({ user: {...user, secondname:e.target.value}})} />
           <button onClick={this.adduser}>Add user</button>
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }
