@@ -17,7 +17,7 @@ class App extends Component {
   }
 
   getusers = _ => {
-    fetch('http://localhost:5000/users')
+    fetch('https://full-stack-pizza-app-server.herokuapp.com/users')
     .then((response) => {
       return response.json();
     })
@@ -26,7 +26,7 @@ class App extends Component {
 
   adduser = _ => {
     const { user } = this.state
-    fetch(`http://localhost:5000/users/add?uid=${user.uid}&firstname=${user.firstname}&secondname=${user.secondname}`)
+    fetch(`https://full-stack-pizza-app-server.herokuapp.com/users/add?uid=${user.uid}&firstname=${user.firstname}&secondname=${user.secondname}`)
     .then(this.getusers)
     .catch(err => console.error(err))
   }
