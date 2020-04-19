@@ -7,9 +7,10 @@ const ProductContext = React.createContext();
 
 class ProductProvider extends Component {
   state = {
-    detailProduct: [],
+    detailProduct: {},
     products: [],
     users: [],
+    cart: [],
     user: {
       uid: v4(),
       firstname: "",
@@ -23,20 +24,53 @@ class ProductProvider extends Component {
     this.getDetailProduct();
   }
 
-  handleDetail = () => {
-    console.log("handleDetail fn");
+  getItem = id => {
+    const product = this.state.products.find(item => item.id === id);
+    return product;
+};
+
+  handleDetail = (id) => {
+    const product = this.getItem(id);
+    this.setState(() => {
+        var array =[]
+        array = product;
+        console.log(array);
+        
+        return { detailProduct: array };
+    });
   };
-  
-  addToCart = () => {
-    console.log("addToCart fn");
-  };
+
+  addToCart = id => {
+    let tempProducts = [...this.state.products];
+    const index = tempProducts.indexOf(this.getItem(id));
+    const product = tempProducts[index];
+    product.inCart = true;
+    product.count = 1;
+    const price = product.price;
+    product.total = price;
+    this.setState(
+        () => {
+            return { products: tempProducts, cart: [...this.state.cart,product]}
+        },
+        () => {
+            console.log(this.state);
+            
+        }
+    )
+}
 
   getDetailProduct = (_) => {
     fetch("https://full-stack-pizza-app-server.herokuapp.com/detailProduct")
       .then((response) => {
         return response.json();
       })
-      .then((response) => this.setState({ detailProduct: response.data }));
+      .then((response) => {
+      var array = response.data
+      var result = array.find(obj => {
+        return obj
+      })
+      console.log(result);
+      this.setState({ detailProduct: result })});
   };
 
   getusers = (_) => {

@@ -7,15 +7,10 @@ class Details extends Component {
     return (
       <ProductConsumer>
         {(value) => {
-          var id, img, info, price, title, inCart;
-          value.detailProduct.map((item) => {
-            (id = item.id),
-              (title = item.title),
-              (img = item.img),
-              (info = item.info),
-              (price = item.price),
-              (inCart = item.inCart);
-          });
+            const { id, img, info, price, title, inCart } = value.detailProduct;
+            console.log(value.detailProduct);
+            
+            console.log(id)
           return (
             <div className="container py-5">
               <div className="row">
@@ -45,7 +40,7 @@ class Details extends Component {
                     <button
                       disabled={inCart ? true : false}
                       onClick={() => {
-                        console.log(("you clicked the button"));
+                        value.addToCart(id)
                       }}
                     >
                       {inCart ? "inCart" : "add to Cart"}
