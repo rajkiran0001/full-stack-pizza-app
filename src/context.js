@@ -11,6 +11,9 @@ class ProductProvider extends Component {
     products: [],
     users: [],
     cart: [],
+    cartTotal: 0,
+    cartSubTotal: 0,
+    deliveryCost: 0,
     user: {
       uid: v4(),
       firstname: "",
@@ -24,23 +27,19 @@ class ProductProvider extends Component {
     this.getDetailProduct();
   }
 
-  getItem = id => {
-    const product = this.state.products.find(item => item.id === id);
+  getItem = (id) => {
+    const product = this.state.products.find((item) => item.id === id);
     return product;
-};
+  };
 
   handleDetail = (id) => {
     const product = this.getItem(id);
     this.setState(() => {
-        var array =[]
-        array = product;
-        console.log(array);
-        
-        return { detailProduct: array };
+      return { detailProduct: product };
     });
   };
 
-  addToCart = id => {
+  addToCart = (id) => {
     let tempProducts = [...this.state.products];
     const index = tempProducts.indexOf(this.getItem(id));
     const product = tempProducts[index];
@@ -49,15 +48,14 @@ class ProductProvider extends Component {
     const price = product.price;
     product.total = price;
     this.setState(
-        () => {
-            return { products: tempProducts, cart: [...this.state.cart,product]}
-        },
-        () => {
-            console.log(this.state);
-            
-        }
-    )
-}
+      () => {
+        return { products: tempProducts, cart: [...this.state.cart, product] };
+      },
+      () => {
+        this.addTotals();
+      }
+    );
+  };
 
   getDetailProduct = (_) => {
     fetch("https://full-stack-pizza-app-server.herokuapp.com/detailProduct")
@@ -65,12 +63,13 @@ class ProductProvider extends Component {
         return response.json();
       })
       .then((response) => {
-      var array = response.data
-      var result = array.find(obj => {
-        return obj
-      })
-      console.log(result);
-      this.setState({ detailProduct: result })});
+        var array = response.data;
+        var result = array.find((obj) => {
+          return obj;
+        });
+        console.log(result);
+        this.setState({ detailProduct: result });
+      });
   };
 
   getusers = (_) => {
@@ -98,6 +97,19 @@ class ProductProvider extends Component {
       .then((response) => this.setState({ products: response.data }));
   };
 
+  increment = (id) => {
+    console.log("increment");
+  };
+  decrement = (id) => {
+    console.log("decrement");
+  };
+  removeCart = (id) => {
+    console.log("remove cart");
+  };
+  clearCart = () => {
+    console.log("clear cart");
+  };
+
   adduser = (_) => {
     const { user } = this.state;
     fetch(
@@ -111,6 +123,19 @@ class ProductProvider extends Component {
     this.setState({ [evt.target.name]: evt.target.value });
   };
 
+  addTotals = () => {
+    let subTotal = 0;
+    this.state.cart.map((item) => (subTotal += item.total));
+    const deliveryCost = 2;
+    const total = subTotal + deliveryCost;
+    this.setState(() => {
+      return {
+        cartSubTotal: subTotal,
+        deliveryCost: deliveryCost,
+        cartTotal: total,
+      };
+    });
+  };
   render() {
     const { users, user, products, detailProduct } = this.state;
     console.log(products);
@@ -121,6 +146,10 @@ class ProductProvider extends Component {
           ...this.state,
           handleDetail: this.handleDetail,
           addToCart: this.addToCart,
+          increment: this.increment,
+          decrement: this.decrement,
+          clearCart: this.clearCart,
+          removeCart: this.removeCart,
         }}
       >
         {this.props.children}
