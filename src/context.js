@@ -11,7 +11,8 @@ class ProductProvider extends Component {
     products: [],
     users: [],
     cart: [],
-    cartTotal: 0,
+    cartDollarTotal: 0,
+    cartEuroTotal: 0,
     cartSubTotal: 0,
     deliveryCost: 0,
     user: {
@@ -72,24 +73,15 @@ class ProductProvider extends Component {
       });
   };
 
-  getusers = (_) => {
-    let tempProducts = [];
+  getusers = () => {
     fetch("https://full-stack-pizza-app-server.herokuapp.com/users")
       .then((response) => {
         return response.json();
       })
-      .then((response) => {
-        response.data.forEach((item) => {
-          const singleItem = { ...item };
-          tempProducts = [...tempProducts, singleItem];
-        });
-        this.setState(() => {
-          return { products: tempProducts };
-        });
-      });
+      .then((response) => this.setState({ users: response.data }));
   };
 
-  getProducts = (_) => {
+  getProducts = () => {
     fetch("https://full-stack-pizza-app-server.herokuapp.com/products")
       .then((response) => {
         return response.json();
@@ -107,7 +99,12 @@ class ProductProvider extends Component {
     console.log("remove cart");
   };
   clearCart = () => {
-    console.log("clear cart");
+    this.setState(() => {
+      return { cart: [] };
+    },() => {
+        this.getProducts()
+        this.addTotals()
+    });
   };
 
   adduser = (_) => {
@@ -127,12 +124,16 @@ class ProductProvider extends Component {
     let subTotal = 0;
     this.state.cart.map((item) => (subTotal += item.total));
     const deliveryCost = 2;
-    const total = subTotal + deliveryCost;
+    const dollarRate = 1;
+    const euroRate = 2;
+    const totalInDollar = subTotal + deliveryCost + dollarRate;
+    const totalInEuro = subTotal + deliveryCost + euroRate;
     this.setState(() => {
       return {
         cartSubTotal: subTotal,
         deliveryCost: deliveryCost,
-        cartTotal: total,
+        cartDollarTotal: totalInDollar,
+        cartEuroTotal: totalInEuro,
       };
     });
   };

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function CartTotals({ value }) {
-  const { cartSubTotal, deliveryCost, cartTotal, clearCart } = value;
+  const { cartSubTotal, deliveryCost, cartEuroTotal, cartDollarTotal, clearCart } = value;
   console.log(value);
 
   return (
@@ -17,15 +17,19 @@ function CartTotals({ value }) {
             </Link>
             <h5>
               <span>subtotal :</span>
-              <strong>$ {cartSubTotal}</strong>
+              <strong>€ {cartSubTotal}</strong>
             </h5>
             <h5>
               <span>delivery cost :</span>
-              <strong>$ {deliveryCost}</strong>
+              <strong>€ {deliveryCost}</strong>
             </h5>
             <h5>
               <span>total :</span>
-              <strong>$ {cartTotal}</strong>
+              <strong>€ {cartEuroTotal}</strong>
+            </h5>
+            <h5>
+              <span>total :</span>
+              <strong>$ {cartDollarTotal}</strong>
             </h5>
           </div>
         </div>
