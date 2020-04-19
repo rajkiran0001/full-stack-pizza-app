@@ -161,9 +161,8 @@ class ProductProvider extends Component {
     this.state.cart.map((item) => (subTotal += item.total));
     const deliveryCost = 2;
     const dollarRate = 1;
-    const euroRate = 2;
-    const totalInDollar = subTotal + deliveryCost + dollarRate;
-    const totalInEuro = subTotal + deliveryCost + euroRate;
+    const totalInDollar = subTotal + deliveryCost - dollarRate;
+    const totalInEuro = subTotal + deliveryCost ;
     this.setState(() => {
       return {
         cartSubTotal: subTotal,
