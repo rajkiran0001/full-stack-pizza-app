@@ -9,21 +9,15 @@ class ProductProvider extends Component {
   state = {
     detailProduct: {},
     products: [],
-    users: [],
     cart: [],
     cartDollarTotal: 0,
     cartEuroTotal: 0,
     cartSubTotal: 0,
     deliveryCost: 0,
-    user: {
-      uid: v4(),
-      firstname: "",
-      secondname: "",
-    },
+
   };
 
   componentDidMount() {
-    this.getusers();
     this.getProducts();
     this.getDetailProduct();
   }
@@ -73,13 +67,6 @@ class ProductProvider extends Component {
       });
   };
 
-  getusers = () => {
-    fetch("https://full-stack-pizza-app-server.herokuapp.com/users")
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => this.setState({ users: response.data }));
-  };
 
   getProducts = () => {
     fetch("https://full-stack-pizza-app-server.herokuapp.com/products")
@@ -168,9 +155,6 @@ class ProductProvider extends Component {
       .catch((err) => console.error(err));
   };
 
-  handleChange = (evt) => {
-    this.setState({ [evt.target.name]: evt.target.value });
-  };
 
   addTotals = () => {
     let subTotal = 0;

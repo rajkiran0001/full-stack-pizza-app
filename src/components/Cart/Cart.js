@@ -3,14 +3,9 @@ import CartColumns from "./CartColumns";
 import { ProductConsumer } from "../../context";
 import CartList from "./CartList";
 import CartTotals from "./CartTotals";
+import ContactForm from "./ContactForm"
 
 class Cart extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
   render() {
     return (
       <ProductConsumer>
@@ -23,7 +18,14 @@ class Cart extends Component {
               <React.Fragment>
                 <CartColumns />
                 <CartList value={value} />
+                <div className="container">
+                  <div style={{ float:'left'}}>
+                <ContactForm value={value}/>
+                  </div>
+                  <div style={{ float:'right'}}>
                 <CartTotals value={value} />
+                  </div>
+                </div>
               </React.Fragment>
             );
           } else {
