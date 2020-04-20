@@ -11,6 +11,7 @@
 - if you want to connect to the local server, add proxy settings to the package.json file (eg: "proxy":"http://localhost:5000")
 - npm start
 - make sure you also clone or download the server repository and follow the readme file https://github.com/rajkiran0001/full-stack-pizza-app-server.git
+- create table in the mysql database for inserting user details data from the front end
 
 ## Project description
 
