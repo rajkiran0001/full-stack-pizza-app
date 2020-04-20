@@ -119,7 +119,7 @@ class ContactForm extends Component {
           <div style={{ fontSize: 12, color: "red" }}>
             {this.state.addressError}
           </div>
-          <button onClick={this.adduser}>submit</button>
+          <button onClick={this.adduser}>Order</button>
         </div>
       </div>
     );
