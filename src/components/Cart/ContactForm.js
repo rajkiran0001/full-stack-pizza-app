@@ -60,7 +60,7 @@ class ContactForm extends Component {
     console.log(isValid);
 
     if (isValid) {
-    fetch(`https://full-stack-pizza-app-server.herokuapp.com/userDetails/add?uid=${user.uid}&name=${user.name}&email=${user.email}&phone=${user.phone}&address=${user.address}`)
+    fetch(`https://dashboard.heroku.com/apps/full-stack-pizza-app-server/userDetails/add?uid=${user.uid}&name=${user.name}&email=${user.email}&phone=${user.phone}&address=${user.address}&euro=${cartEuroTotal}&dollar=${cartDollarTotal}`)
     .then(this.getusers)
     .catch(err => console.error(err))
     this.setState(initialState);
