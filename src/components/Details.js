@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ProductConsumer } from "../context";
 import { Link } from "react-router-dom";
+import { ButtonContainer } from "./Button";
 
 class Details extends Component {
   render() {
@@ -8,9 +9,7 @@ class Details extends Component {
       <ProductConsumer>
         {(value) => {
           const { id, img, info, price, title, inCart } = value.detailProduct;
-          console.log(value.detailProduct);
 
-          console.log(id);
           return (
             <div className="container py-5">
               <div className="row">
@@ -27,20 +26,23 @@ class Details extends Component {
                       price : <span>$</span> {price}
                     </strong>
                   </h4>
-                  <p className=" mt-3 mb-0"> some info about pizza:</p>
+                  <strong className=" mt-3 mb-0">
+                    {" "}
+                    some info about pizza:
+                  </strong>
                   <p>{info}</p>
                   <div>
                     <Link to="/">
-                      <button>back to products</button>
+                      <ButtonContainer>back to products</ButtonContainer>
                     </Link>
-                    <button
+                    <ButtonContainer
                       disabled={inCart ? true : false}
                       onClick={() => {
                         value.addToCart(id);
                       }}
                     >
                       {inCart ? "inCart" : "add to Cart"}
-                    </button>
+                    </ButtonContainer>
                   </div>
                 </div>
               </div>

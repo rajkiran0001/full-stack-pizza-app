@@ -1,16 +1,16 @@
 import React, { Component } from "react";
+import { Input, Alert } from "reactstrap";
+import { ButtonContainer } from "../Button";
+
 import { v4 } from "uuid";
 
 const initialState = {
   uid: v4(),
   name: "",
-  email: "",
-  phone: "",
   address: "",
   nameError: "",
-  emailError: "",
-  phoneError: "",
   addressError: "",
+  visible: false,
 };
 
 class ContactForm extends Component {
@@ -20,50 +20,44 @@ class ContactForm extends Component {
 
   validate = () => {
     let nameError = "";
-    let emailError = "";
-    let phoneError = "";
     let addressError = "";
 
     if (!this.state.user.name) {
       nameError = "name cannot be blank";
     }
-    if (!this.state.user.email) {
-      emailError = "email cannot be blank";
-    }
-    if (!this.state.user.phone) {
-      phoneError = "phone cannot be blank";
-    }
+
     if (!this.state.user.address) {
       addressError = "address cannot be blank";
     }
 
-    if (emailError || nameError || phoneError || addressError) {
+    if (nameError || addressError) {
       this.setState({
-        emailError,
         nameError,
-        phoneError,
         addressError,
       });
       return false;
     }
     return true;
   };
+  toggle = () => {
+    this.setState({
+      visible: !this.state.visible,
+    });
+  };
 
   adduser = (_) => {
     const { user } = this.state;
     const { cartEuroTotal, cartDollarTotal } = this.props.value;
-    console.log(cartEuroTotal, cartDollarTotal);
     const isValid = this.validate();
-    console.log(isValid);
 
     if (isValid) {
       fetch(
-        `https://full-stack-pizza-app-server.herokuapp.com/userDetails/add?uid=${user.uid}&name=${user.name}&email=${user.email}&phone=${user.phone}&address=${user.address}&euro=${cartEuroTotal}&dollar=${cartDollarTotal}`
+        `https://full-stack-pizza-app-server.herokuapp.com/add?uid=${user.uid}&name=${user.name}&address=${user.address}&euro=${cartEuroTotal}&dollar=${cartDollarTotal}&`
       )
-        .then(this.getusers)
+        .then(() => this.setState({ success: "order complete", visible: true }))
+
         .catch((err) => console.error(err));
       this.setState(initialState);
-      alert("submitted");
     } else {
       console.log("error");
     }
@@ -76,50 +70,29 @@ class ContactForm extends Component {
         <h3>User Details</h3>
         <div>
           Username:{" "}
-          <input
+          <Input
             value={user.name}
             onChange={(e) =>
               this.setState({ user: { ...user, name: e.target.value } })
             }
           />
-          <br />
           <div style={{ fontSize: 12, color: "red" }}>
             {this.state.nameError}
           </div>
-          Email:{" "}
-          <input
-            value={user.email}
-            onChange={(e) =>
-              this.setState({ user: { ...user, email: e.target.value } })
-            }
-          />
-          <br />
-          <div style={{ fontSize: 12, color: "red" }}>
-            {this.state.emailError}
-          </div>
-          Phone:{" "}
-          <input
-            value={user.phone}
-            onChange={(e) =>
-              this.setState({ user: { ...user, phone: e.target.value } })
-            }
-          />
-          <br />
-          <div style={{ fontSize: 12, color: "red" }}>
-            {this.state.phoneError}
-          </div>
           Delivery Address:{" "}
-          <input
+          <Input
             value={user.address}
             onChange={(e) =>
               this.setState({ user: { ...user, address: e.target.value } })
             }
           />
-          <br />
           <div style={{ fontSize: 12, color: "red" }}>
             {this.state.addressError}
           </div>
-          <button onClick={this.adduser}>Order</button>
+          <ButtonContainer onClick={this.adduser}>Order</ButtonContainer>
+          <Alert isOpen={this.state.visible} toggle={this.toggle}>
+            {this.state.success}
+          </Alert>
         </div>
       </div>
     );

@@ -1,0 +1,13 @@
+:root{
+    --mainGreen: #006600;
+    --lightGreen: #669900;
+    --mainWhite: #f3f3f3;
+    --mainDark: #232528;
+    --mainYellow: #ffa400;
+  }
+  body{
+    font-family: "Oswald", sans-serif !important;
+    background: var(--mainWhite) !important;
+    color: var(--mainDark) !important;
+  }
+

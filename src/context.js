@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { v4 } from "uuid";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,7 +13,6 @@ class ProductProvider extends Component {
     cartEuroTotal: 0,
     cartSubTotal: 0,
     deliveryCost: 0,
-
   };
 
   componentDidMount() {
@@ -62,11 +60,9 @@ class ProductProvider extends Component {
         var result = array.find((obj) => {
           return obj;
         });
-        console.log(result);
         this.setState({ detailProduct: result });
       });
   };
-
 
   getProducts = () => {
     fetch("https://full-stack-pizza-app-server.herokuapp.com/products")
@@ -155,14 +151,13 @@ class ProductProvider extends Component {
       .catch((err) => console.error(err));
   };
 
-
   addTotals = () => {
     let subTotal = 0;
     this.state.cart.map((item) => (subTotal += item.total));
-    const deliveryCost = 2;
-    const dollarRate = 1;
+    const deliveryCost = 5;
+    const dollarRate = 2;
     const totalInDollar = subTotal + deliveryCost - dollarRate;
-    const totalInEuro = subTotal + deliveryCost ;
+    const totalInEuro = subTotal + deliveryCost;
     this.setState(() => {
       return {
         cartSubTotal: subTotal,
@@ -173,9 +168,6 @@ class ProductProvider extends Component {
     });
   };
   render() {
-    const { users, user, products, detailProduct } = this.state;
-    console.log(products);
-    console.log(detailProduct);
     return (
       <ProductContext.Provider
         value={{
