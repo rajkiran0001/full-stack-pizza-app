@@ -12,6 +12,7 @@
 - npm start
 - make sure you also clone or download the server repository and follow the readme file https://github.com/rajkiran0001/full-stack-pizza-app-server.git
 - create tables in the mysql database for inserting and displaying data from the front end
+- npm run test to test the application
 
 ## Project description
 
