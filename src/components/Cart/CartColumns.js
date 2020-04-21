@@ -6,22 +6,22 @@ function CartColumns() {
       <div className="container text-center d-none d-lg-block">
         <div className="row">
           <div className="col-10 mx-auto col-lg-2">
-            <div>Pizzas</div>
+            <div><strong>Pizzas</strong></div>
           </div>
           <div className="col-10 mx-auto col-lg-2">
-            <div>Name of pizza</div>
+            <div><strong>Name of pizza</strong></div>
           </div>
           <div className="col-10 mx-auto col-lg-2">
-            <div>Price</div>
+            <div><strong>Price</strong></div>
           </div>
           <div className="col-10 mx-auto col-lg-2">
-            <div>Quantity</div>
+            <div><strong>Quantity</strong></div>
           </div>
           <div className="col-10 mx-auto col-lg-2">
-            <div>Remove</div>
+            <div><strong>Remove</strong></div>
           </div>
           <div className="col-10 mx-auto col-lg-2">
-            <div>Total</div>
+            <div><strong>Total</strong></div>
           </div>
         </div>
       </div>
