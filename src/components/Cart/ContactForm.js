@@ -26,7 +26,7 @@ const OrderHistory = ({ value }) => {
               <img
                 src={item.img}
                 style={{ width: "5rem", height: "5rem" }}
-                className="img-fluid"
+                className="img-fluid" alt="product"
               />
             </div>
             <div>
@@ -134,7 +134,7 @@ class ContactForm extends Component {
             {this.state.addressError}
           </div>
           <ButtonContainer onClick={this.adduser}>Order</ButtonContainer>
-        </div>
+        </div>{" "}
         {showOrderHistory ? <OrderHistory value={result} /> : null}
       </div>
     );

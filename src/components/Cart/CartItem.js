@@ -9,7 +9,7 @@ function CartItem({ item, value }) {
         <img
           src={img}
           style={{ width: "5rem", height: "5rem" }}
-          className="img-fluid"
+          className="img-fluid" alt="product"
         />
       </div>
       <div className="col-10 mx-auto col-lg-2">
