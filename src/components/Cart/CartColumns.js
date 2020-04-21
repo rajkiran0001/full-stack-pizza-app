@@ -9,16 +9,19 @@ function CartColumns() {
             <div>Pizzas</div>
           </div>
           <div className="col-10 mx-auto col-lg-2">
-            <div>name of pizza</div>
+            <div>Name of pizza</div>
           </div>
           <div className="col-10 mx-auto col-lg-2">
-            <div>price</div>
+            <div>Price</div>
           </div>
           <div className="col-10 mx-auto col-lg-2">
-            <div>quantity</div>
+            <div>Quantity</div>
           </div>
           <div className="col-10 mx-auto col-lg-2">
-            <div>remove</div>
+            <div>Remove</div>
+          </div>
+          <div className="col-10 mx-auto col-lg-2">
+            <div>Total</div>
           </div>
         </div>
       </div>

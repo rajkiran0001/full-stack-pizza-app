@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { Input, Alert } from "reactstrap";
+import { Input } from "reactstrap";
 import { ButtonContainer } from "../Button";
-
 import { v4 } from "uuid";
 
 const initialState = {
@@ -13,8 +12,47 @@ const initialState = {
   visible: false,
 };
 
+const OrderHistory = ({ value }) => {
+  return (
+    <div>
+      <div className="alert alert-success">
+        <strong>order complete!</strong>
+      </div>
+      <h1>Order History</h1>
+      {value.cart.map(function (item, i) {
+        return (
+          <div key={i}>
+            <div>
+              <img
+                src={item.img}
+                style={{ width: "5rem", height: "5rem" }}
+                className="img-fluid"
+              />
+            </div>
+            <div>
+              <strong>Title:</strong>
+              {item.title}
+            </div>
+            <div>
+              <strong>Total: </strong>€ {item.total}
+            </div>
+          </div>
+        );
+      })}
+      <div>
+        <strong>Shipment:</strong>
+        {value.deliveryCost}
+      </div>
+      <div>
+        <h2>Final Amount: € {value.cartEuroTotal}</h2>
+      </div>
+    </div>
+  );
+};
+
 class ContactForm extends Component {
   state = {
+    showOrderHistory: false,
     user: initialState,
   };
 
@@ -51,8 +89,12 @@ class ContactForm extends Component {
     const isValid = this.validate();
 
     if (isValid) {
+      this.setState(() => {
+        return { showOrderHistory: true };
+      });
+
       fetch(
-        `https://full-stack-pizza-app-server.herokuapp.com/add?uid=${user.uid}&name=${user.name}&address=${user.address}&euro=${cartEuroTotal}&dollar=${cartDollarTotal}&`
+        `https://full-stack-pizza-app-server.herokuapp.com/userDetails/add?uid=${user.uid}&name=${user.name}&address=${user.address}&euro=${cartEuroTotal}&dollar=${cartDollarTotal}&`
       )
         .then(() => this.setState({ success: "order complete", visible: true }))
 
@@ -65,6 +107,8 @@ class ContactForm extends Component {
 
   render() {
     const { user } = this.state;
+    var showOrderHistory = this.state.showOrderHistory;
+    const result = this.props.value;
     return (
       <div className="App">
         <h3>User Details</h3>
@@ -90,10 +134,8 @@ class ContactForm extends Component {
             {this.state.addressError}
           </div>
           <ButtonContainer onClick={this.adduser}>Order</ButtonContainer>
-          <Alert isOpen={this.state.visible} toggle={this.toggle}>
-            {this.state.success}
-          </Alert>
         </div>
+        {showOrderHistory ? <OrderHistory value={result} /> : null}
       </div>
     );
   }

@@ -17,11 +17,14 @@ class Cart extends Component {
                 <CartColumns />
                 <CartList value={value} />
                 <div className="container">
-                  <div style={{ float: "left" }}>
+                <div className="row">
+                  
+                  <div className="col-9 mx-auto col-md-6 col-lg-4 my-3" style={{ float: "left" }}>
                     <ContactForm value={value} />
                   </div>
-                  <div style={{ float: "right" }}>
+                  <div className="col-9 mx-auto col-md-6 col-lg-4 my-3" style={{ float: "right" }}>
                     <CartTotals value={value} />
+                  </div>
                   </div>
                 </div>
               </React.Fragment>
